@@ -9,6 +9,16 @@
 </head>
 <body>
     <div class="ps-panel">
+        <div class="ps-header">
+            <div class="ps-title">PS风格面板</div>
+            <div class="ps-user-info" id="userInfo">
+                <div class="user-avatar">👤</div>
+                <div class="user-details">
+                    <span class="username" id="username">未登录</span>
+                    <a href="#" class="logout-btn" id="logoutBtn">退出登录</a>
+                </div>
+            </div>
+        </div>
         <div class="ps-tabs">
             <div class="ps-tab active" data-tab="tab1">室内设计</div>
             <div class="ps-tab" data-tab="tab2">建筑规划</div>
@@ -86,5 +96,39 @@
     </div>
     <script type="text/javascript" src="./js/CSInterface.js"></script>
     <script type="text/javascript" src="./js/main.js"></script>
+    <script type="text/javascript">
+        // 检查登录状态
+        document.addEventListener('DOMContentLoaded', function() {
+            var isLoggedIn = localStorage.getItem('isLoggedIn');
+            var currentUser = localStorage.getItem('currentUser');
+            
+            if (!isLoggedIn || isLoggedIn !== 'true') {
+                // 未登录，跳转到登录页面
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // 已登录，显示用户信息
+            var usernameElement = document.getElementById('username');
+            var logoutBtn = document.getElementById('logoutBtn');
+            
+            if (usernameElement && currentUser) {
+                usernameElement.textContent = currentUser;
+            }
+            
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // 清除登录状态
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('currentUser');
+                    
+                    // 跳转到登录页面
+                    window.location.href = 'login.html';
+                });
+            }
+        });
+    </script>
 </body>
 </html> 
